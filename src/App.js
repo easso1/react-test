@@ -21,13 +21,13 @@ class App extends Component {
                     <NavbarBrand href="/">NuCamp</NavbarBrand>
                 </div>
                 </Navbar>
-                 <Directory />
+                <Directory campsites={this.state.campsites} />
             </div>
         );
     }
 }
 
-<Directory campsites={this.state.campsites} />
+
 
 
 export default App;
