@@ -1,14 +1,10 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
 
-export const addComment = (campsiteId, rating, author, text) => ({
+
+export const addComment = comment => ({
   type: ActionTypes.ADD_COMMENT,
-  payload: {
-    campsiteId: campsiteId,
-    rating: rating,
-    author: author,
-    text: text,
-  },
+  payload: comment
 });
 
 export const fetchCampsites = () => dispatch => {
@@ -60,6 +56,11 @@ export const fetchComments = () => dispatch => {
 export const commentsFailed = errMess => ({
   type: ActionTypes.COMMENTS_FAILED,
   payload: errMess,
+});
+
+export const addComments = comments => ({
+  type: ActionTypes.ADD_COMMENTS,
+  payload: comments,
 });
 
 export const postComment = (campsiteId, rating, author, text) => dispatch => {
@@ -151,3 +152,41 @@ export const addCampsites = campsites => ({
   type: ActionTypes.ADD_CAMPSITES,
   payload: campsites,
 });
+
+export const addPartners = partners => ({
+  type: ActionTypes.ADD_PARTNERS,
+  payload: partners,
+});
+
+export const partnersLoading = () => ({
+  type: ActionTypes.PARTNERS_LOADING,
+});
+
+export const partnersFailed = errMess => ({
+  type: ActionTypes.PARTNERS_FAILED,
+  payload: errMess,
+});
+
+export const fetchPartners = () => dispatch => {
+  dispatch(partnersLoading());
+
+  return fetch(baseUrl + 'partners')
+    .then(
+      response => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(`Error ${response.status}: ${response.statusText}`);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
+    .then(response => response.json())
+    .then(partners => dispatch(addPartners(partners)))
+    .catch(error => dispatch(partnersFailed(error.message)));
+};
