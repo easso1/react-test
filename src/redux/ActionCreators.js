@@ -1,6 +1,9 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
 
+export const postFeedback = () => dispatch => {
+  
+}
 
 export const addComment = comment => ({
   type: ActionTypes.ADD_COMMENT,

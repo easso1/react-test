@@ -14,18 +14,20 @@ import {
   fetchComments,
   fetchPromotions,
   fetchPartners,
+  postFeedback,
 } from '../redux/ActionCreators';
 import {actions} from 'react-redux-form';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 const mapDispatchToProps = {
   postComment: (campsiteId, rating, author, text) => postComment(campsiteId, rating, author, text),
-  
-  fetchCampsites: () => fetchCampsites(),
-  resetFeedbackForm: () => actions.reset('feedbackForm'),
-  fetchComments: () => fetchComments(),
-  fetchPromotions: () => fetchPromotions(),
-  fetchPartners: () => fetchPartners(),
+  addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
+  fetchCampsites: () => (fetchCampsites()),
+  resetFeedbackForm: () => (actions.reset('feedbackForm')),
+  fetchComments: () => (fetchComments()),
+  fetchPromotions: () => (fetchPromotions()),
+  fetchPartners: () => (fetchPartners()),
+  postFeedback: () => postFeedback(),
 };
 
 const mapStateToProps = state => {
