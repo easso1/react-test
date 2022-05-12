@@ -21,13 +21,12 @@ import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 const mapDispatchToProps = {
   postComment: (campsiteId, rating, author, text) => postComment(campsiteId, rating, author, text),
-  addComment: (campsiteId, rating, author, text) => (addComment(campsiteId, rating, author, text)),
+  postFeedback: (feedback) => (postFeedback(feedback)),
   fetchCampsites: () => (fetchCampsites()),
   resetFeedbackForm: () => (actions.reset('feedbackForm')),
   fetchComments: () => (fetchComments()),
   fetchPromotions: () => (fetchPromotions()),
   fetchPartners: () => (fetchPartners()),
-  postFeedback: () => postFeedback(),
 };
 
 const mapStateToProps = state => {
@@ -99,7 +98,8 @@ class Main extends Component {
               <Route
                 exact
                 path="/contactus"
-                render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />}
+                render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback}/>
+              }
               />
               <Route
                 exact

@@ -1,13 +1,9 @@
 import * as ActionTypes from './ActionTypes';
 import {baseUrl} from '../shared/baseUrl';
 
-export const postFeedback = () => dispatch => {
-  
-}
-
 export const addComment = comment => ({
   type: ActionTypes.ADD_COMMENT,
-  payload: comment
+  payload: comment,
 });
 
 export const fetchCampsites = () => dispatch => {
@@ -192,4 +188,32 @@ export const fetchPartners = () => dispatch => {
     .then(response => response.json())
     .then(partners => dispatch(addPartners(partners)))
     .catch(error => dispatch(partnersFailed(error.message)));
+};
+
+export const postFeedback = feedback => () => {
+  return fetch(baseUrl + 'feedback', {
+    method: 'POST',
+    body: JSON.stringify(feedback),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(
+      response => {
+        if (response.ok) {
+          return alert('Thank you for your feedback' + JSON.stringify(feedback));
+        } else {
+          const error = new Error(`Error ${response.status}: ${response.statusText}`);
+          error.response = response;
+          throw error;
+        }
+      },
+      error => {
+        throw error;
+      }
+    )
+    .catch(error => {
+      console.log('post comment', error.message);
+      alert('Your comment could not be posted\nError: ' + error.message);
+    });
 };
